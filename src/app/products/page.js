@@ -36,7 +36,8 @@ const ProductsPage = () => {
   const getProductDetails = async () => {
     try {
       setLoadingProducts(true);
-      const response = (await axios.post(servicePath + "/products", {}))?.data;
+      const response = (await axios.post(servicePath + "/api/products", {}))
+        ?.data;
 
       if (response?.status === 200) {
         dispatch(updateProducts(response?.products || []));
