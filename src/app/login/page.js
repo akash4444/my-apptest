@@ -28,13 +28,10 @@ const Login = () => {
     const { email, password } = values;
     setLoading(true);
     try {
-      const saltRounds = 10;
-      const staticSalt = bcryptjs.genSaltSync(saltRounds);
-      const hashedPassword = await bcryptjs.hash(password, staticSalt);
       const response = (
         await axios.post(servicePath + "/api/auth", {
           email,
-          password: hashedPassword,
+          password: password,
         })
       )?.data;
 
