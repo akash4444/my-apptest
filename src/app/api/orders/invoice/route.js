@@ -44,14 +44,12 @@ export async function POST(request, res) {
     // Render PDF document
     const html = generateHTML(orderDetails);
 
-    const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setContent(html);
     const pdfBuffer = await page.pdf({
       format: "A4",
-      path: "invoice.pdf", // Optional: Specify the path to save the PDF file
+      // Optional: Specify the path to save the PDF file
     });
     await browser.close();
 
