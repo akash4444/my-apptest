@@ -84,7 +84,7 @@ const ProductForm = ({
 
   const getProductNames = async () => {
     try {
-      const response = (await axios.post(servicePath + "/productNames", {}))
+      const response = (await axios.post(servicePath + "/api/productNames", {}))
         ?.data;
 
       if (response.status === 200) {

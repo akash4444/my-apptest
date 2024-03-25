@@ -74,7 +74,7 @@ const AddressForm = ({
   const fetchPicodes = async (pinCode) => {
     try {
       const response = (
-        await axios.get(servicePath + `/pinCode/${pinCode.toString()}`)
+        await axios.get(servicePath + `/api/pinCode/${pinCode.toString()}`)
       )?.data;
 
       if (response.Status === "Success") {

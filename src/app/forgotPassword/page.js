@@ -54,7 +54,7 @@ const ForgotPassword = () => {
 
       setOtpSending(true);
       const response = (
-        await axios.post(servicePath + "/sendOtp", { email: email })
+        await axios.post(servicePath + "/api/sendOtp", { email: email })
       )?.data;
 
       if (response.status === 200) {
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
       const { email, otp } = values;
       setOtpVerifying(true);
       const response = (
-        await axios.post(servicePath + "/validateOtp", { email, otp })
+        await axios.post(servicePath + "/api/validateOtp", { email, otp })
       )?.data;
 
       if (response.status === 200) {
@@ -107,7 +107,7 @@ const ForgotPassword = () => {
       const hashedPassword = await bcryptjs.hash(password, staticSalt);
 
       const response = (
-        await axios.post(servicePath + "/updatePassword", {
+        await axios.post(servicePath + "/api/updatePassword", {
           email,
           password: hashedPassword,
         })

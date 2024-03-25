@@ -65,7 +65,7 @@ const MyOrdersPage = () => {
     setOrderDownloading(order._id);
     try {
       const response = await axios.post(
-        servicePath + `/orders/invoice`,
+        servicePath + `/api/orders/invoice`,
         payload,
         {
           responseType: "blob",

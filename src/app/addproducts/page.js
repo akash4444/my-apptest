@@ -27,7 +27,7 @@ const AddProductForm = () => {
       setSubmitting(true);
 
       const data = (
-        await axios.post(servicePath + "/saveProduct", { ...payload })
+        await axios.post(servicePath + "/api/saveProduct", { ...payload })
       )?.data;
 
       setMessage({
