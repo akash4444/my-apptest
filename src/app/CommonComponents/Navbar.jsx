@@ -11,7 +11,6 @@ import { resetOrders } from "../redux/orders/orders";
 import { resetAdminOrders } from "../redux/adminOrders/adminOrders";
 import { resetAddress } from "../redux/address/address";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 import CartIcon from "./CartIcon";
 
 const Navbar = () => {
@@ -33,7 +32,6 @@ const Navbar = () => {
 
   const logoutProcess = async () => {
     setLoading(true);
-    await signOut({ redirect: false });
     setLogoutModal(false);
     setLoading(false);
     router.push("/login");

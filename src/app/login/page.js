@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { MessageAlert, LoadingSpinner } from "../CommonComponents";
 import { updateAuth } from "../redux/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { signIn } from "next-auth/react";
+import servicePath from "@/config";
+import axios from "axios";
+import bcryptjs from "bcryptjs";
 
 const Login = () => {
   const router = useRouter();
@@ -26,11 +28,15 @@ const Login = () => {
     const { email, password } = values;
     setLoading(true);
     try {
-      const response = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      const saltRounds = 10;
+      const staticSalt = bcryptjs.genSaltSync(saltRounds);
+      const hashedPassword = await bcryptjs.hash(password, staticSalt);
+      const response = (
+        await axios.post(servicePath + "/auth", {
+          email,
+          password: hashedPassword,
+        })
+      )?.data;
 
       const data = response;
 
@@ -39,6 +45,7 @@ const Login = () => {
           updateAuth({
             userId: email,
             isLoggedIn: true,
+            role: data.role,
           })
         );
         router.push("/products");
