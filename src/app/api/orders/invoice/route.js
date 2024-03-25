@@ -49,7 +49,10 @@ export async function POST(request, res) {
     });
     const page = await browser.newPage();
     await page.setContent(html);
-    const pdfBuffer = await page.pdf();
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      path: "invoice.pdf", // Optional: Specify the path to save the PDF file
+    });
     await browser.close();
 
     const response = new NextResponse(pdfBuffer, {
