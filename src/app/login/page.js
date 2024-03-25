@@ -32,7 +32,7 @@ const Login = () => {
       const staticSalt = bcryptjs.genSaltSync(saltRounds);
       const hashedPassword = await bcryptjs.hash(password, staticSalt);
       const response = (
-        await axios.post(servicePath + "/auth", {
+        await axios.post(servicePath + "/api/auth", {
           email,
           password: hashedPassword,
         })
