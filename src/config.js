@@ -1,3 +1,3 @@
-const servicePath = "http://localhost:3000/api";
+const servicePath = process.env.SERVICE_PATH;
 
 export default servicePath;
