@@ -6,6 +6,7 @@ import { resetAuth, updateAuth } from "../../redux/auth/authSlice";
 import { adminInPages } from "@/constant";
 import axios from "axios";
 import servicePath from "@/config";
+import { loggedOut } from "@/app/commonFunctions/commonFunctions";
 
 export default function AuthGuard({ children }) {
   const router = useRouter();
@@ -20,12 +21,14 @@ export default function AuthGuard({ children }) {
       try {
         const response = await axios.get(servicePath + "/api/auth/check-auth");
         if (response.status !== 200) {
+          await loggedOut();
           router.push("/login");
         }
         setLoading(false);
       } catch (error) {
         console.error("Error checking authentication:", error);
         setLoading(false);
+        await loggedOut();
         router.push("/login");
       }
     };
