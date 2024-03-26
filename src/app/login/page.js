@@ -10,6 +10,7 @@ import servicePath from "@/config";
 import axios from "axios";
 import bcryptjs from "bcryptjs";
 import { clearStoreForLoggedOut } from "../commonFunctions/commonFunctions";
+import axiosInstance from "../commonFunctions/axiosCommon";
 
 const Login = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const Login = () => {
     setLoading(true);
     try {
       const response = (
-        await axios.post(servicePath + "/api/auth", {
+        await axiosInstance.post(servicePath + "/api/auth", {
           email,
           password: password,
         })

@@ -54,7 +54,9 @@ const ProductsPage = () => {
       setDeleting(true);
       const productId = deleteDialog;
       const response = (
-        await axios.delete(servicePath + "/api/removeProduct" + `/${productId}`)
+        await axiosInstance.delete(
+          servicePath + "/api/removeProduct" + `/${productId}`
+        )
       )?.data;
 
       if (response?.status === 200) {
@@ -83,7 +85,7 @@ const ProductsPage = () => {
       };
 
       const response = (
-        await axios.post(servicePath + "/api/addToCart", payload)
+        await axiosInstance.post(servicePath + "/api/addToCart", payload)
       )?.data;
 
       if (response?.status === 200) {
