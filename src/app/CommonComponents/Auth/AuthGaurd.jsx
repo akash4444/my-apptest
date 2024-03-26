@@ -21,14 +21,14 @@ export default function AuthGuard({ children }) {
       try {
         const response = await axios.get(servicePath + "/api/auth/check-auth");
         if (response.status !== 200) {
-          await loggedOut();
+          await loggedOut(dispatch);
           router.push("/login");
         }
         setLoading(false);
       } catch (error) {
         console.error("Error checking authentication:", error);
         setLoading(false);
-        await loggedOut();
+        await loggedOut(dispatch);
         router.push("/login");
       }
     };

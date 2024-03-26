@@ -11,8 +11,6 @@ export async function GET(request) {
   const cookieStore = cookies();
   const cookie = cookieStore.get("token") || {};
   const token = cookie.value || "";
-
-  console.log("===token", token);
   try {
     if (!token) {
       return NextResponse.json(

@@ -11,18 +11,22 @@ import { resetAuth } from "../redux/auth/authSlice";
 import { resetProductNames } from "../redux/products/productNames";
 import { resetProducts } from "../redux/products/products";
 
+export const clearStoreForLoggedOut = async (dispatch, payload) => {
+  dispatch(resetAuth());
+  dispatch(resetProductNames());
+  dispatch(resetProducts());
+  dispatch(resetCart());
+  dispatch(resetOrders());
+  dispatch(resetAdminOrders());
+  dispatch(resetAddress());
+};
+
 export const loggedOut = async (dispatch, payload) => {
   try {
     const response = (await axios.get(servicePath + "/api/auth/logout"))?.data;
 
     if (response?.status === 200) {
-      dispatch(resetAuth());
-      dispatch(resetProductNames());
-      dispatch(resetProducts());
-      dispatch(resetCart());
-      dispatch(resetOrders());
-      dispatch(resetAdminOrders());
-      dispatch(resetAddress());
+      clearStoreForLoggedOut(dispatch);
     }
   } catch (e) {}
 };

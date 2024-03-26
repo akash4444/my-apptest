@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { updateProducts } from "../redux/products/products";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import axiosInstance from "../commonFunctions/axiosCommon";
 import servicePath from "@/config";
 import { AlertModal, LoadingSpinner } from "../CommonComponents";
 import { useRouter, usePathname } from "next/navigation";
@@ -36,8 +36,9 @@ const ProductsPage = () => {
   const getProductDetails = async () => {
     try {
       setLoadingProducts(true);
-      const response = (await axios.post(servicePath + "/api/products", {}))
-        ?.data;
+      const response = (
+        await axiosInstance.post(servicePath + "/api/products", {})
+      )?.data;
 
       if (response?.status === 200) {
         dispatch(updateProducts(response?.products || []));
