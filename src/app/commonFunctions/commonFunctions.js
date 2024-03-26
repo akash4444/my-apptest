@@ -1,9 +1,31 @@
 import axios from "axios";
 import servicePath from "@/config";
-import { updateCart } from "../redux/cart/cart";
-import { updateOrders } from "../redux/orders/orders";
-import { updateAdminOrders } from "../redux/adminOrders/adminOrders";
-import { updateAddress } from "../redux/address/address";
+import { updateCart, resetCart } from "../redux/cart/cart";
+import { updateOrders, resetOrders } from "../redux/orders/orders";
+import {
+  updateAdminOrders,
+  resetAdminOrders,
+} from "../redux/adminOrders/adminOrders";
+import { updateAddress, resetAddress } from "../redux/address/address";
+import { resetAuth } from "../redux/auth/authSlice";
+import { resetProductNames } from "../redux/products/productNames";
+import { resetProducts } from "../redux/products/products";
+
+export const loggedOut = async (dispatch, payload) => {
+  try {
+    const response = (await axios.get(servicePath + "/api/auth/logout"))?.data;
+
+    if (response?.status === 200) {
+      dispatch(resetAuth());
+      dispatch(resetProductNames());
+      dispatch(resetProducts());
+      dispatch(resetCart());
+      dispatch(resetOrders());
+      dispatch(resetAdminOrders());
+      dispatch(resetAddress());
+    }
+  } catch (e) {}
+};
 
 export const getCartItems = async (dispatch, payload) => {
   try {

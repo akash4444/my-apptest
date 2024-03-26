@@ -4,14 +4,34 @@ import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { resetAuth, updateAuth } from "../../redux/auth/authSlice";
 import { adminInPages } from "@/constant";
+import axios from "axios";
+import servicePath from "@/config";
 
 export default function AuthGuard({ children }) {
   const router = useRouter();
   const currentPath = usePathname();
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth || {});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const isAdmin = role === "admin";
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const response = await axios.get(servicePath + "/api/auth/check-auth");
+        if (response.status !== 200) {
+          router.push("/login");
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setLoading(false);
+        router.push("/login");
+      }
+    };
+
+    checkToken();
+  }, []);
 
   if (loading) {
     return (
